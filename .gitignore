@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+server/node_modules/
+front/node_modules/
+
+# env files
+.env
+server/.env
+front/.env
+
+# build
+dist/
+build/
+server/dist/
+front/dist/
+front/build/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor
+.vscode/
+.idea/
+
+# system
+.DS_Store
