@@ -1,0 +1,47 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { User } from "./user.entity";
+import { EventParticipant } from "./event-participant.entity";
+
+@Entity("events")
+export class Event {
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
+
+  @Column({ type: "varchar", length: 255 })
+  title!: string;
+
+  @Column({ type: "text" })
+  description?: string;
+
+  @Column({ type: "int" })
+  copacity!: number;
+
+  @Column({ type: "varchar", length: 255 })
+  address!: string;
+
+  @Column({ type: "timestamptz" })
+  starterdAt!: Date;
+
+  @ManyToOne(() => User, (user) => user.events, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "ownerId" })
+  owner!: User;
+
+  @Column({ type: "uuid" })
+  ownerId!: string;
+
+  participants!: EventParticipant[];
+
+  @CreateDateColumn({ type: "timestamptz" })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ type: "timestamptz" })
+  updatedAt!: Date;
+}

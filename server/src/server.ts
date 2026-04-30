@@ -8,6 +8,14 @@ import { env, validateEnv } from "../config/env";
 
 const app = fastify({ logger: true });
 
+app.decorate("authenticate", async (request, reply) => {
+  try {
+    await request.jwtVerify();
+  } catch (err) {
+    reply.code(401).send({ message: "Unauthorized" });
+  }
+});
+
 const start = async () => {
   try {
     validateEnv();
