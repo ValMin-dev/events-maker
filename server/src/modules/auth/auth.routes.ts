@@ -90,7 +90,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
   });
 
   app.get("/me", { preHandler: [app.authenticate] }, async (request, reply) => {
-    const { id } = request.user;
+    const { sub: id } = request.user;
     const user = await userRepository.findOne({ where: { id: id } });
     if (!user) {
       return reply.status(404).send({

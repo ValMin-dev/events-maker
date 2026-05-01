@@ -22,13 +22,13 @@ export class Event {
   description?: string;
 
   @Column({ type: "int" })
-  copacity!: number;
+  capacity!: number;
 
   @Column({ type: "varchar", length: 255 })
   address!: string;
 
   @Column({ type: "timestamptz" })
-  starterdAt!: Date;
+  startedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.events, { onDelete: "CASCADE" })
   @JoinColumn({ name: "ownerId" })
