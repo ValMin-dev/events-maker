@@ -5,6 +5,7 @@ import "dotenv/config";
 import "reflect-metadata";
 import { AppDataSource } from "./db/data-sourse";
 import { env, validateEnv } from "../config/env";
+import { authRoutes } from "./modules/auth/auth.routes";
 
 const app = fastify({ logger: true });
 
@@ -31,6 +32,9 @@ const start = async () => {
     await app.register(fastifyJwt, {
       secret: env.JWT_SECRET,
     });
+
+    await app.register(authRoutes, { prefix: "/auth" });
+
     await app.listen({ port: env.PORT, host: env.HOST });
     app.log.info(`Server is running at http://${env.HOST}:${env.PORT}`);
   } catch (err) {
