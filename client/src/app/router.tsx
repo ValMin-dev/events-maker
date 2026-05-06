@@ -3,6 +3,8 @@ import { RootLayout } from "./router/RootLayout";
 import { RootRedirect } from "./router/RootRedirect";
 import { GuestRoute } from "./router/GuestRoute";
 import { ProtectedRoute } from "./router/ProtectedRoute";
+import { AuthRegisterPage } from "../pages/auth/register/page";
+import { AuthLoginPage } from "../pages/auth/login/page";
 
 export const appRouter = createBrowserRouter([
   {
@@ -13,8 +15,8 @@ export const appRouter = createBrowserRouter([
       {
         element: <GuestRoute />,
         children: [
-          { path: "login", element: <div>LoginPage</div> },
-          { path: "register", element: <div>RegisterPage</div> },
+          { path: "login", element: <AuthLoginPage /> },
+          { path: "register", element: <AuthRegisterPage /> },
         ],
       },
       {
