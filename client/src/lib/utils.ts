@@ -19,3 +19,13 @@ export function getApiErrorMessage(error: unknown): string {
   }
   return "An unknown error occurred";
 }
+
+export function getUserInitials(name: string | null | undefined) {
+  const normalizedName = String(name ?? "").trim();
+  if (!normalizedName) return "?";
+
+  const names = normalizedName.split(/\s+/);
+  if (names.length === 0) return "?";
+  if (names.length === 1) return names[0].slice(0, 2).toUpperCase();
+  return names[0][0].toUpperCase() + names[names.length - 1][0].toUpperCase();
+}
