@@ -5,7 +5,7 @@ import {
   SidebarTrigger,
 } from "../../components/ui/sidebar";
 import { TooltipProvider } from "../../components/ui/tooltip";
-import { AppSidebar } from "../../components/ui/app-sidebar/AppSidebar";
+import { AppSidebar } from "../../components/app-sidebar/AppSidebar";
 
 export function ProtectedLayout() {
   return (

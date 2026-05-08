@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import { PlusIcon, SquaresExclude } from "lucide-react";
 
 export function AppSidebarNav() {

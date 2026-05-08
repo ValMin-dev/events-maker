@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
 import { Calendar1 } from "lucide-react";
 
 export function AppSidebarBrand() {

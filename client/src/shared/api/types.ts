@@ -3,7 +3,9 @@ export type UserPublic = {
   name: string;
   email: string;
 };
-
+export type ApiErrorResponse = {
+  message: string;
+};
 export type UserProfile = UserPublic & {
   createdAt: string;
   updatedAt: string;

@@ -5,6 +5,10 @@ import { GuestRoute } from "./router/GuestRoute";
 import { ProtectedRoute } from "./router/ProtectedRoute";
 import { AuthRegisterPage } from "../pages/auth/register/page";
 import { AuthLoginPage } from "../pages/auth/login/page";
+import { EventsAllPage } from "../pages/events/all/page";
+import { EventsMyPage } from "../pages/events/my/page";
+import { EventDetailsPage } from "../pages/events/[id]/page";
+import { EventCreateForm } from "../pages/events/components/EventCreateForm";
 
 export const appRouter = createBrowserRouter([
   {
@@ -22,10 +26,10 @@ export const appRouter = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
-          { path: "events", element: <div>EventsPage</div> },
-          { path: "events/my", element: <div>My Events</div> },
-          { path: "events/new", element: <div>New Event</div> },
-          { path: "events/:id", element: <div>Event Details</div> },
+          { path: "events", element: <EventsAllPage /> },
+          { path: "events/my", element: <EventsMyPage /> },
+          { path: "events/new", element: <EventCreateForm /> },
+          { path: "events/:id", element: <EventDetailsPage /> },
           { path: "events/:id/edit", element: <div>Edit Event</div> },
         ],
       },

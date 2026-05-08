@@ -1,10 +1,10 @@
 import { LogOut } from "lucide-react";
-import { getUserInitials } from "../../../lib/utils";
-import type { UserPublic } from "../../../shared/api/types";
-import { Avatar, AvatarFallback } from "../avatar";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../sidebar";
-import { eventsApi } from "../../../shared/api/events-api";
-import { meApi } from "../../../shared/api/me-api";
+import { getUserInitials } from "../../lib/utils";
+import type { UserPublic } from "../../shared/api/types";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
+import { eventsApi } from "../../shared/api/events-api";
+import { meApi } from "../../shared/api/me-api";
 
 type Props = {
   user: UserPublic;

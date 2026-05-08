@@ -1,11 +1,11 @@
-import { useAuthStore } from "../../../stores/auth-store";
+import { useAuthStore } from "../../stores/auth-store";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   useSidebar,
-} from "../sidebar";
+} from "../../components/ui/sidebar";
 import { AppSidebarBrand } from "./AppSidebarBrand";
 import { AppSidebarFooter } from "./AppSidebarFooter";
 import { AppSidebarNav } from "./AppSidebarNav";

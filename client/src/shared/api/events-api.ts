@@ -9,9 +9,11 @@ import type {
 
 export const eventsApi = {
   async getAll(): Promise<Event[]> {
-    const { data } = await http.get<Event[]>("/events");
-    console.log("Fetched events:", data);
-    return data;
+    const { data } = await http.get<{ message: string; events: Event[] }>(
+      "/events",
+    );
+    console.log("Fetched events:", data.events);
+    return data.events;
   },
 
   async getById(id: string) {
