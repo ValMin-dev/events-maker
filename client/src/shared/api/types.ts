@@ -72,3 +72,5 @@ export type JoinedEventItem = {
   joinedAt: string;
   event: Event;
 };
+
+export type JoinedEvent = Event | JoinedEventItem;

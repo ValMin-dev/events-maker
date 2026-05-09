@@ -47,7 +47,10 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
 
   app.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     const { id } = request.params;
-    const event = await eventRepository.findOne({ where: { id: id } });
+    const event = await eventRepository.findOne({
+      where: { id: id },
+      relations: ["participants"],
+    });
     if (!event) {
       return reply.status(404).send({
         message: "Event not found",

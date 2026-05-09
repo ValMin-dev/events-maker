@@ -19,7 +19,7 @@ export const authApi = {
     return data;
   },
   async me(): Promise<UserProfile> {
-    const { data } = await http.get<UserProfile>("/auth/me");
-    return data;
+    const { data } = await http.get<{ user: UserProfile }>("/auth/me");
+    return data.user;
   },
 };

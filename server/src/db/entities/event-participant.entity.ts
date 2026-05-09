@@ -4,7 +4,6 @@ import {
   Index,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Event } from "./event.entity";
@@ -37,7 +36,4 @@ export class EventParticipant {
 
   @Column({ type: "timestamptz" })
   joinedAt!: Date;
-
-  @OneToMany(() => EventParticipant, (participant) => participant.event)
-  participants!: EventParticipant[];
 }

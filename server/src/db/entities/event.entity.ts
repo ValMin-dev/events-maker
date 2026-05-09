@@ -4,6 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -37,6 +38,7 @@ export class Event {
   @Column({ type: "uuid" })
   ownerId!: string;
 
+  @OneToMany(() => EventParticipant, (participant) => participant.event)
   participants!: EventParticipant[];
 
   @CreateDateColumn({ type: "timestamptz" })

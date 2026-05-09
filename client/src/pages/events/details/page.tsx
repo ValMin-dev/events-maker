@@ -1,0 +1,117 @@
+import { Link, Navigate, useParams } from "react-router-dom";
+import { useAuthStore } from "../../../stores/auth-store";
+import { useEventsStore } from "../../../stores/event-store";
+import { useEventById } from "../hooks/use-event-by-id";
+import { PageShell } from "../../../components/page-shell";
+import { Button } from "../../../components/ui/button";
+import { EventDetailsCard } from "../components/EventDetailsCard";
+export function EventDetailsPage() {
+  const { user, isAuthLoading, isAuthenticated } = useAuthStore();
+  console.log("EventDetailsPage auth state", {
+    user,
+    isAuthLoading,
+    isAuthenticated,
+  });
+  const { id } = useParams<{ id: string }>();
+  const {
+    myEvents,
+    joinEvent,
+    leaveEvent,
+    mutationLoading,
+    currentEvent,
+    fetchEventById,
+  } = useEventsStore();
+
+  const {
+    event,
+    isLoading,
+    notFound,
+    error: eventError,
+  } = useEventById(id, {
+    prefetchJoinedEvents: true,
+  });
+
+  const visibleEvent = currentEvent?.id === event?.id ? currentEvent : event;
+
+  if (!id || notFound) {
+    return <Navigate to="/events" replace />;
+  }
+  if (isAuthLoading) {
+    return (
+      <PageShell title="Loading...">
+        <span>Loading user profile...</span>
+      </PageShell>
+    );
+  }
+  if (isLoading) {
+    return (
+      <PageShell title="Loading...">
+        <span>Loading event details...</span>
+      </PageShell>
+    );
+  }
+  if (eventError) {
+    return (
+      <PageShell title="Error">
+        <span>Error loading event: {eventError}</span>
+      </PageShell>
+    );
+  }
+  if (!isAuthenticated || !user) {
+    return (
+      <PageShell title="Error">
+        <span>Error with authentication: User not logged in</span>
+      </PageShell>
+    );
+  }
+  const handleJoinClick = async () => {
+    try {
+      if (!visibleEvent) return;
+      await joinEvent(visibleEvent.id);
+      await fetchEventById(visibleEvent.id);
+    } catch (error) {
+      console.error("Failed to join event:", error);
+    }
+  };
+
+  const handleLeaveClick = async () => {
+    try {
+      if (!visibleEvent) return;
+      await leaveEvent(visibleEvent.id);
+      await fetchEventById(visibleEvent.id);
+    } catch (error) {
+      console.error("Failed to leave event:", error);
+    }
+  };
+
+  const isOwner = user?.id === visibleEvent?.ownerId;
+  const isParticipant = myEvents.some(
+    (joined) => joined.id === visibleEvent?.id,
+  );
+
+  console.log("EventDetailsPage render", {
+    id,
+    event: visibleEvent,
+    isOwner,
+    isParticipant,
+  });
+  return (
+    <PageShell title={visibleEvent?.title || "Event Details"}>
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-4">
+        <Button variant="ghost" size="sm" className="w-fit" asChild>
+          <Link to="/events">Back to Events</Link>
+        </Button>
+
+        <EventDetailsCard
+          event={visibleEvent!}
+          isOwner={isOwner}
+          isParticipant={isParticipant}
+          mutationLoading={mutationLoading}
+          eventsError={eventError}
+          onClickJoin={handleJoinClick}
+          onClickLeave={handleLeaveClick}
+        />
+      </div>
+    </PageShell>
+  );
+}

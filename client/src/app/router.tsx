@@ -7,8 +7,9 @@ import { AuthRegisterPage } from "../pages/auth/register/page";
 import { AuthLoginPage } from "../pages/auth/login/page";
 import { EventsAllPage } from "../pages/events/all/page";
 import { EventsMyPage } from "../pages/events/my/page";
-import { EventDetailsPage } from "../pages/events/[id]/page";
+import { EventDetailsPage } from "../pages/events/details/page";
 import { EventCreateForm } from "../pages/events/components/EventCreateForm";
+import { EventsEditPage } from "../pages/events/edit/page";
 
 export const appRouter = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ export const appRouter = createBrowserRouter([
           { path: "events/my", element: <EventsMyPage /> },
           { path: "events/new", element: <EventCreateForm /> },
           { path: "events/:id", element: <EventDetailsPage /> },
-          { path: "events/:id/edit", element: <div>Edit Event</div> },
+          { path: "events/:id/edit", element: <EventsEditPage /> },
         ],
       },
       { path: "*", element: <Navigate to="/" replace /> },

@@ -9,7 +9,7 @@ import { authApi } from "../shared/api/auth-api";
 import { getApiErrorMessage } from "../lib/utils";
 
 type AuthState = {
-  user: null | UserPublic;
+  user: UserPublic | null;
   token: string | null;
   isAuthenticated: boolean;
   isAuthLoading: boolean;
@@ -43,17 +43,22 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     set({ isAuthLoading: true, authError: null });
     try {
-      if (!getAuthToken()) {
+      const token = getAuthToken();
+      console.log("auth bootstrap token:", token ? "present" : "missing");
+
+      if (!token) {
         set({ user: null, isAuthLoading: false, isAuthenticated: false });
         return;
       }
       const profile = await authApi.me();
+      console.log("auth bootstrap profile:", profile);
       set({
         user: profileToUser(profile),
         isAuthenticated: true,
         isAuthLoading: false,
       });
     } catch (error) {
+      console.error("auth bootstrap failed:", error);
       setAuthToken("");
       set({
         user: null,

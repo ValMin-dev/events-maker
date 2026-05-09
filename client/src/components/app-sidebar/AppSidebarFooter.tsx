@@ -81,7 +81,7 @@ export function AppSidebarFooter({ user, sidebarExpanded, onLogout }: Props) {
         </SidebarMenuButton>
         <SidebarMenuButton
           onClick={() =>
-            eventsApi.getParticipants("436fc835-fbe9-4e89-8ed9-c401e2579241")
+            eventsApi.getParticipants("8ca50c62-33a2-46ef-a449-7128f3554d33")
           }
           tooltip="Get Participants"
         >

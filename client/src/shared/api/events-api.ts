@@ -17,20 +17,25 @@ export const eventsApi = {
   },
 
   async getById(id: string) {
-    const { data } = await http.get<Event>(`/events/${id}`);
+    const { data } = await http.get<{ message: string; event: Event }>(
+      `/events/${id}`,
+    );
     if (!data) {
       throw new Error("Failed to fetch event");
     }
-    console.log("Fetched event:", data);
-    return data;
+    console.log("Fetched event:", data.event);
+    return data.event;
   },
   async create(payload: CreateEventRequest): Promise<Event> {
-    const { data } = await http.post<Event>("/events", payload);
+    const { data } = await http.post<{ message: string; event: Event }>(
+      "/events",
+      payload,
+    );
     if (!data) {
       throw new Error("Failed to create event");
     }
-    console.log("Created event:", data);
-    return data;
+    console.log("Created event:", data.event);
+    return data.event;
   },
   async update(id: string, payload: UpdateEventRequest): Promise<Event> {
     const { data } = await http.patch<Event>(`/events/${id}`, payload);

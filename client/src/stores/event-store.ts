@@ -3,7 +3,6 @@ import type {
   CreateEventRequest,
   UpdateEventRequest,
   Event,
-  JoinedEventItem,
 } from "../shared/api/types";
 import { getApiErrorMessage } from "../lib/utils";
 import { eventsApi } from "../shared/api/events-api";
@@ -13,7 +12,8 @@ export type MyEventsFilter = "joined" | "created";
 
 type EventsState = {
   events: Event[];
-  myEvents: JoinedEventItem[];
+  myEvents: Event[];
+  currentEvent: Event | null;
   myEventsFilter: MyEventsFilter | "created";
   eventsLoading: boolean;
   joinedLoading: boolean;
@@ -24,7 +24,7 @@ type EventsState = {
 
   setMyEventsFilter: (filter: MyEventsFilter) => void;
   loadEvents: () => Promise<void>;
-  loadJoinedEvents: () => Promise<void>;
+  loadJoinedEvents: () => Promise<Event[]>;
   createEvent: (payload: CreateEventRequest) => Promise<Event>;
   updateEvent: (id: string, payload: UpdateEventRequest) => Promise<Event>;
   deleteEvent: (id: string) => Promise<void>;
@@ -32,7 +32,7 @@ type EventsState = {
   leaveEvent: (id: string) => Promise<void>;
 
   fetchEvents: () => Promise<Event[]>;
-  fetchMyEvents: () => Promise<JoinedEventItem[]>;
+  fetchMyEvents: () => Promise<Event[]>;
   fetchEventById: (id: string) => Promise<Event>;
   getParticipants: (id: string) => Promise<void>;
 };
@@ -40,6 +40,7 @@ type EventsState = {
 export const useEventsStore = create<EventsState>((set, get) => ({
   events: [],
   myEvents: [],
+  currentEvent: null,
   myEventsFilter: "created",
   eventsLoading: false,
   joinedLoading: false,
@@ -57,7 +58,7 @@ export const useEventsStore = create<EventsState>((set, get) => ({
   },
 
   loadJoinedEvents: async () => {
-    await get().fetchMyEvents();
+    return await get().fetchMyEvents();
   },
 
   updateEvent: async (id: string, payload: UpdateEventRequest) => {
@@ -69,7 +70,7 @@ export const useEventsStore = create<EventsState>((set, get) => ({
           event.id === id ? updatedEvent : event,
         ),
         myEvents: state.myEvents.map((joined) =>
-          joined.event.id === id ? { ...joined, event: updatedEvent } : joined,
+          joined.id === id ? updatedEvent : joined,
         ),
         mutationLoading: false,
       }));
@@ -107,7 +108,7 @@ export const useEventsStore = create<EventsState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const event = await eventsApi.getById(id);
-      set({ isLoading: false });
+      set({ currentEvent: event, isLoading: false });
       return event;
     } catch (error) {
       set({ error: getApiErrorMessage(error), isLoading: false });
@@ -125,6 +126,7 @@ export const useEventsStore = create<EventsState>((set, get) => ({
         ),
         mutationLoading: false,
       }));
+      await get().joinEvent(newEvent.id);
       return newEvent;
     } catch (error) {
       set({ error: getApiErrorMessage(error), mutationLoading: false });
@@ -138,7 +140,7 @@ export const useEventsStore = create<EventsState>((set, get) => ({
       await eventsApi.delete(id);
       set((state) => ({
         events: state.events.filter((event) => event.id !== id),
-        myEvents: state.myEvents.filter((joined) => joined.event.id !== id),
+        myEvents: state.myEvents.filter((joined) => joined.id !== id),
         mutationLoading: false,
       }));
     } catch (error) {
@@ -150,8 +152,9 @@ export const useEventsStore = create<EventsState>((set, get) => ({
     set({ mutationLoading: true, error: null });
     try {
       await eventsApi.join(id);
-      await get().fetchMyEvents();
-      set({ mutationLoading: false });
+      const freshMyEvents = await get().fetchMyEvents();
+      await get().fetchEventById(id);
+      set({ myEvents: freshMyEvents, mutationLoading: false });
     } catch (error) {
       set({ error: getApiErrorMessage(error), mutationLoading: false });
       throw error;
@@ -161,13 +164,12 @@ export const useEventsStore = create<EventsState>((set, get) => ({
     set({ mutationLoading: true, error: null });
     try {
       await eventsApi.leave(id);
-      await get().fetchMyEvents();
-      set({
-        myEvents: get().myEvents.filter((joined) => joined.event.id !== id),
-        mutationLoading: false,
-      });
+      const freshMyEvents = await get().fetchMyEvents();
+      await get().fetchEventById(id);
+      set({ myEvents: freshMyEvents, mutationLoading: false });
     } catch (error) {
       set({ error: getApiErrorMessage(error), mutationLoading: false });
+      throw error;
     }
   },
   getParticipants: async (id: string) => {

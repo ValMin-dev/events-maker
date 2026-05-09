@@ -1,9 +1,9 @@
 import { http } from "./http";
-import type { JoinedEventItem } from "./types";
+import type { Event } from "./types";
 
 export const meApi = {
-  async joinedEvents(): Promise<JoinedEventItem[]> {
-    const { data } = await http.get<JoinedEventItem[]>("/me/events/joined", {
+  async joinedEvents(): Promise<Event[]> {
+    const { data } = await http.get<{ events: Event[] }>("/me/events/joined", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,6 @@ export const meApi = {
     if (!data) {
       throw new Error("Failed to fetch user profile");
     }
-    console.log("Fetched user profile:", data);
-    return data;
+    return data.events;
   },
 };
