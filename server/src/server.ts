@@ -15,7 +15,7 @@ app.decorate("authenticate", async (request, reply) => {
   try {
     await request.jwtVerify();
   } catch (err) {
-    reply.code(401).send({ message: "Unauthorized" });
+    reply.code(401).send({ message: "Неавторизовано" });
   }
 });
 
@@ -23,7 +23,7 @@ const start = async () => {
   try {
     validateEnv();
     await AppDataSource.initialize();
-    app.log.info("Database connected successfully");
+    app.log.info("Базу даних успішно підключено");
 
     await app.register(cors, {
       origin: true,
@@ -42,7 +42,7 @@ const start = async () => {
     await app.register(meRoutes, { prefix: "/me" });
 
     await app.listen({ port: env.PORT, host: env.HOST });
-    app.log.info(`Server is running at http://${env.HOST}:${env.PORT}`);
+    app.log.info(`Сервер запущено за адресою http://${env.HOST}:${env.PORT}`);
   } catch (err) {
     if (AppDataSource.isInitialized) {
       await AppDataSource.destroy();

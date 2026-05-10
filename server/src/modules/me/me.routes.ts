@@ -30,7 +30,7 @@ export const meRoutes = async (app: FastifyInstance) => {
     const user = await userRepository.findOne({ where: { id: id } });
     if (!user) {
       return reply.status(404).send({
-        message: "User not found",
+        message: "Користувача не знайдено",
       });
     }
     return reply.send({

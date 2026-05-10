@@ -24,7 +24,7 @@ export function AppSidebarNav() {
         >
           <Link to="/events">
             <SquaresExclude className="mr-1" />
-            All Events
+            Всі події
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
@@ -38,7 +38,7 @@ export function AppSidebarNav() {
         >
           <Link to="/events/my">
             <SquaresExclude className="mr-1" />
-            My Events
+            Мої події
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
@@ -53,7 +53,7 @@ export function AppSidebarNav() {
         >
           <Link to="/events/new">
             <PlusIcon className="mr-1" />
-            Create Event
+            Створити подію
           </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>

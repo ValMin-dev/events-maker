@@ -12,7 +12,6 @@ export const eventsApi = {
     const { data } = await http.get<{ message: string; events: Event[] }>(
       "/events",
     );
-    console.log("Fetched events:", data.events);
     return data.events;
   },
 
@@ -21,9 +20,8 @@ export const eventsApi = {
       `/events/${id}`,
     );
     if (!data) {
-      throw new Error("Failed to fetch event");
+      throw new Error("Не вдалося отримати подію");
     }
-    console.log("Fetched event:", data.event);
     return data.event;
   },
   async create(payload: CreateEventRequest): Promise<Event> {
@@ -32,42 +30,37 @@ export const eventsApi = {
       payload,
     );
     if (!data) {
-      throw new Error("Failed to create event");
+      throw new Error("Не вдалося створити подію");
     }
-    console.log("Created event:", data.event);
     return data.event;
   },
   async update(id: string, payload: UpdateEventRequest): Promise<Event> {
     const { data } = await http.patch<Event>(`/events/${id}`, payload);
 
     if (!data) {
-      throw new Error("Failed to update event");
+      throw new Error("Не вдалося оновити подію");
     }
-    console.log("Updated event:", data);
     return data;
   },
   async delete(id: string): Promise<void> {
     const { data } = await http.delete(`/events/${id}`);
     if (!data) {
-      throw new Error("Failed to delete event");
+      throw new Error("Не вдалося видалити подію");
     }
-    console.log("Deleted event:", data);
     return data;
   },
   async join(id: string): Promise<JoinEventResponse> {
     const { data } = await http.post<JoinEventResponse>(`/events/${id}/join`);
     if (!data) {
-      throw new Error("Failed to join event");
+      throw new Error("Не вдалося приєднатися до події");
     }
-    console.log("Joined event:", data);
     return data;
   },
   async leave(id: string): Promise<void> {
     const { data } = await http.delete(`/events/${id}/leave`);
     if (!data) {
-      throw new Error("Failed to leave event");
+      throw new Error("Не вдалося покинути подію");
     }
-    console.log("Left event:", data);
     return data;
   },
   async getParticipants(id: string): Promise<ParticipantsResponse> {
@@ -75,9 +68,8 @@ export const eventsApi = {
       `/events/${id}/participants`,
     );
     if (!data) {
-      throw new Error("Failed to fetch participants");
+      throw new Error("Не вдалося отримати учасників");
     }
-    console.log("Fetched participants:", data);
     return data;
   },
 };

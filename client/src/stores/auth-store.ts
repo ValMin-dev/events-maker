@@ -44,27 +44,24 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isAuthLoading: true, authError: null });
     try {
       const token = getAuthToken();
-      console.log("auth bootstrap token:", token ? "present" : "missing");
 
       if (!token) {
         set({ user: null, isAuthLoading: false, isAuthenticated: false });
         return;
       }
       const profile = await authApi.me();
-      console.log("auth bootstrap profile:", profile);
       set({
         user: profileToUser(profile),
         isAuthenticated: true,
         isAuthLoading: false,
       });
     } catch (error) {
-      console.error("auth bootstrap failed:", error);
       setAuthToken("");
       set({
         user: null,
         isAuthLoading: false,
         isAuthenticated: false,
-        authError: "Failed to authenticate user",
+        authError: "Не вдалося автентифікувати користувача",
       });
     } finally {
       set({ isAuthLoading: false });
@@ -84,7 +81,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } catch (error) {
       set({
         authError:
-          getApiErrorMessage(error) || "Login failed. Please try again.",
+          getApiErrorMessage(error) || "Не вдалося увійти. Спробуйте ще раз.",
       });
     } finally {
       set({ isAuthLoading: false });
@@ -108,7 +105,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } catch (error) {
       set({
         authError:
-          getApiErrorMessage(error) || "Registration failed. Please try again.",
+          getApiErrorMessage(error) ||
+          "Не вдалося зареєструватися. Спробуйте ще раз.",
       });
     } finally {
       set({ isAuthLoading: false });

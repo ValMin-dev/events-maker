@@ -31,22 +31,22 @@ export function RegisterForm() {
     const passwordConfirm = formData.get("passwordConfirm")?.toString() ?? "";
 
     if (password !== passwordConfirm) {
-      setClientError("Passwords do not match");
+      setClientError("Паролі не збігаються");
       return;
     }
     if (password.length < 6) {
-      setClientError("Password must be at least 6 characters");
+      setClientError("Пароль має містити щонайменше 6 символів");
       return;
     }
     if (name.length < 2) {
-      setClientError("Name must be at least 2 characters");
+      setClientError("Ім'я має містити щонайменше 2 символи");
       return;
     }
     try {
       await register({ name, email, password });
       navigate("/events");
     } catch (error) {
-      setClientError("An unexpected error occurred");
+      setClientError("Сталася неочікувана помилка");
     }
   };
 
@@ -54,19 +54,19 @@ export function RegisterForm() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <AuthFormCard
-        title="Create an account"
-        description="Enter your details to create your account."
+        title="Створити акаунт"
+        description="Введіть свої дані, щоб створити акаунт."
       >
         <form onSubmit={handleSubmit}>
           <FieldGroup>
             <AuthFormErrorAlert message={topError} />
             <Field>
-              <FieldLabel htmlFor="register-name">Name</FieldLabel>
+              <FieldLabel htmlFor="register-name">Ім'я</FieldLabel>
               <input
                 id="register-name"
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Ім'я"
                 autoComplete="name"
                 required
                 minLength={2}
@@ -75,12 +75,12 @@ export function RegisterForm() {
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor="register-email">Email</FieldLabel>
+              <FieldLabel htmlFor="register-email">Електронна пошта</FieldLabel>
               <input
                 id="register-email"
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder="Електронна пошта"
                 autoComplete="email"
                 required
                 minLength={2}
@@ -89,12 +89,12 @@ export function RegisterForm() {
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor="register-password">Password</FieldLabel>
+              <FieldLabel htmlFor="register-password">Пароль</FieldLabel>
               <input
                 id="register-password"
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Пароль"
                 autoComplete="new-password"
                 required
                 minLength={2}
@@ -104,13 +104,13 @@ export function RegisterForm() {
             </Field>
             <Field>
               <FieldLabel htmlFor="register-password-confirm">
-                Confirm Password
+                Підтвердіть пароль
               </FieldLabel>
               <input
                 id="register-password-confirm"
                 type="password"
                 name="passwordConfirm"
-                placeholder="Confirm Password"
+                placeholder="Підтвердіть пароль"
                 autoComplete="new-password"
                 required
                 minLength={2}
@@ -119,11 +119,15 @@ export function RegisterForm() {
               />
             </Field>
             <Field>
-              <Button type="submit" disabled={isAuthLoading} className="w-full">
-                {isAuthLoading ? "Loading..." : "Register account"}
+              <Button
+                type="submit"
+                disabled={isAuthLoading}
+                className="w-full cursor-pointer"
+              >
+                {isAuthLoading ? "Завантаження..." : "Зареєструватися"}
               </Button>
               <FieldDescription className="text-center">
-                Already have an account?{" "}
+                Вже маєте акаунт?{" "}
                 <Link
                   to="/login"
                   className="text-blue-500 underline-offset-4 hover:underline"
@@ -132,7 +136,7 @@ export function RegisterForm() {
                     setClientError(null);
                   }}
                 >
-                  Log in
+                  Увійти
                 </Link>
               </FieldDescription>
             </Field>

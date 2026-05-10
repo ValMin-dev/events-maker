@@ -25,7 +25,7 @@ export function EventEditForm({ className }: Props) {
       <div
         className={`flex w-full h-full flex-col items-center justify-center gap-4 ${className}`}
       >
-        <span>Event not found.</span>
+        <span>Подію не знайдено.</span>
       </div>
     );
   }
@@ -34,7 +34,7 @@ export function EventEditForm({ className }: Props) {
       <div
         className={`flex w-full h-full flex-col items-center justify-center gap-4 ${className}`}
       >
-        <span>Loading event details...</span>
+        <span>Завантаження деталей події...</span>
       </div>
     );
   }
@@ -44,7 +44,7 @@ export function EventEditForm({ className }: Props) {
         className={`flex w-full h-full flex-col items-center justify-center gap-4 ${className}`}
       >
         <span className="text-destructive">
-          Error loading event: {eventError}
+          Помилка завантаження події: {eventError}
         </span>
       </div>
     );
@@ -54,7 +54,7 @@ export function EventEditForm({ className }: Props) {
       <div
         className={`flex w-full h-full flex-col items-center justify-center gap-4 ${className}`}
       >
-        <span>You do not have permission to edit this event.</span>
+        <span>У вас немає дозволу редагувати цю подію.</span>
       </div>
     );
   }
@@ -70,12 +70,12 @@ export function EventEditForm({ className }: Props) {
     >
       <EventForm
         key={event.id}
-        title="Edit Event"
-        subtitle=" Make changes to your event details below."
+        title="Редагувати подію"
+        subtitle="Внесіть зміни до деталей події нижче."
         backTo={`/events/${event.id}`}
-        backLabel=" Back to details"
+        backLabel="Назад до деталей"
         cancelTo={`/events/${event.id}`}
-        submittingLabel="Saving"
+        submittingLabel="Збереження"
         inputValues={{
           title: event.title,
           description: event.description,
@@ -83,7 +83,7 @@ export function EventEditForm({ className }: Props) {
           capacity: event.capacity,
           startedAt: startedAtForInput,
         }}
-        submitLabel="Save Changes"
+        submitLabel="Зберегти зміни"
         onSubmit={async (values) => {
           await updateEvent(id, values);
           navigate(`/events/${id}`);

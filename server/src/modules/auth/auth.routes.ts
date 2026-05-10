@@ -11,7 +11,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const parseBody = registerSchema.safeParse(request.body);
     if (!parseBody.success) {
       return reply.status(400).send({
-        message: "Invalid request body",
+        message: "Некоректне тіло запиту",
       });
     }
     const { email, password, name } = parseBody.data;
@@ -19,7 +19,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const existingUser = await userRepository.findOne({ where: { email } });
     if (existingUser) {
       return reply.status(400).send({
-        message: "Email is already registered",
+        message: "Електронна пошта вже зареєстрована",
       });
     }
     const passwordHash = await argon2.hash(password);
@@ -32,7 +32,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const token = app.jwt.sign({ sub: savedUser.id, email: savedUser.email });
 
     return reply.status(201).send({
-      message: "User registered successfully",
+      message: "Користувача успішно зареєстровано",
       token,
       user: {
         id: savedUser.id,
@@ -46,7 +46,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const parseBody = loginSchema.safeParse(request.body);
     if (!parseBody.success) {
       return reply.status(400).send({
-        message: "Invalid request body",
+        message: "Некоректне тіло запиту",
       });
     }
     const { email, password } = parseBody.data;
@@ -54,19 +54,19 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const user = await userRepository.findOne({ where: { email } });
     if (!user) {
       return reply.status(400).send({
-        message: "Invalid email or password",
+        message: "Невірна електронна пошта або пароль",
       });
     }
     const isPasswordValid = await argon2.verify(user.passwordHash, password);
     if (!isPasswordValid) {
       return reply.status(400).send({
-        message: "Invalid email or password",
+        message: "Невірна електронна пошта або пароль",
       });
     }
     const token = app.jwt.sign({ sub: user.id, email: user.email });
 
     return reply.send({
-      message: "Login successful",
+      message: "Вхід виконано успішно",
       token,
       user: {
         id: user.id,
@@ -94,7 +94,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
     const user = await userRepository.findOne({ where: { id: id } });
     if (!user) {
       return reply.status(404).send({
-        message: "User not found",
+        message: "Користувача не знайдено",
       });
     }
     return reply.send({

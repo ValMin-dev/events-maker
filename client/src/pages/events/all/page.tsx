@@ -13,10 +13,10 @@ export function EventsAllPage() {
 
   const showInitialLoading = isLoading && events.length === 0;
   if (showInitialLoading) {
-    return <div>Loading...</div>;
+    return <div>Завантаження...</div>;
   }
   if (events.length === 0 && !isLoading && !error && !events) {
-    return <div>No events found.</div>;
+    return <div>Події не знайдено.</div>;
   }
 
   if (error) {
@@ -24,8 +24,8 @@ export function EventsAllPage() {
   }
 
   return (
-    <PageShell title="All Events">
-      {showInitialLoading ? <div>Loading...</div> : null}
+    <PageShell title="Усі події">
+      {showInitialLoading ? <div>Завантаження...</div> : null}
       {error ? <ErrorRetryBlock className="mb-4" error={error} /> : null}
 
       <ul className="grid w-full max-w-7xl grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

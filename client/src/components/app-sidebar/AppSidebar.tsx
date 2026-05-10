@@ -30,7 +30,7 @@ export function AppSidebar() {
             onClick={logout}
             className="w-full rounded-md bg-destructive px-3 py-2 text-sm font-medium text-destructive-foreground hover:bg-destructive/90"
           >
-            Logout
+            Вихід
           </button>
         )}
 

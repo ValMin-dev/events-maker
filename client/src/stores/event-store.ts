@@ -177,8 +177,7 @@ export const useEventsStore = create<EventsState>((set, get) => ({
   getParticipants: async (id: string) => {
     set({ mutationLoading: true, error: null });
     try {
-      const participants = await eventsApi.getParticipants(id);
-      console.log("Participants for event", id, ":", participants);
+      await eventsApi.getParticipants(id);
       set({ mutationLoading: false });
     } catch (error) {
       set({ error: getApiErrorMessage(error), mutationLoading: false });

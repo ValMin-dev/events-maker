@@ -13,12 +13,12 @@ export function EventCreateForm({ className }: Props) {
   return (
     <EventForm
       className={className}
-      title="Create New Event"
-      subtitle="Fill in the details to create a new event."
+      title="Створити подію"
+      subtitle="Заповніть дані, щоб створити нову подію."
       backTo="/events"
-      backLabel="Back to Events"
-      submitLabel="Create Event"
-      submittingLabel="Creating..."
+      backLabel="Назад до подій"
+      submitLabel="Створити подію"
+      submittingLabel="Створення..."
       cancelTo="/events"
       error={error}
       onSubmit={async (values) => {

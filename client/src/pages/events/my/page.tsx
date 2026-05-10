@@ -41,14 +41,16 @@ export function MyEventsPage() {
   const createdCount = createdList().length;
   const joinedCount = myEvents.length;
   return (
-    <PageShell title="My Events">
+    <PageShell title="Мої події">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <div className="grid grid-cols-2 gap-3 sm:max-w-md">
-          <MyEventsStatTitle label="Created" value={createdCount} />
-          <MyEventsStatTitle label="Joined" value={joinedCount} />
+          <MyEventsStatTitle label="Створив" value={createdCount} />
+          <MyEventsStatTitle label="Приєднався" value={joinedCount} />
         </div>
         {error ? (
-          <div className="text-destructive">Error loading events: {error}</div>
+          <div className="text-destructive">
+            Помилка завантаження подій: {error}
+          </div>
         ) : null}
         <Tabs
           defaultValue={myEventsFilter}
@@ -59,17 +61,17 @@ export function MyEventsPage() {
         >
           <TabsList className="grid w-full grid-cols-2 ">
             <TabsTrigger className="cursor-pointer" value="created">
-              Created
+              Створені
             </TabsTrigger>
             <TabsTrigger className="cursor-pointer" value="joined">
-              Joined
+              Приєднанався
             </TabsTrigger>
           </TabsList>
           <TabsContent value="created" className="pt-4">
             {isLoading && createdList().length === 0 ? (
-              <div>Loading...</div>
+              <div>Завантаження...</div>
             ) : createdList().length === 0 ? (
-              <div>No created events found.</div>
+              <div>Створених подій не знайдено.</div>
             ) : (
               <EventsTable events={createdList()} />
             )}
@@ -77,9 +79,9 @@ export function MyEventsPage() {
 
           <TabsContent value="joined" className="pt-4">
             {isLoading && myEvents.length === 0 ? (
-              <div>Loading...</div>
+              <div>Завантаження...</div>
             ) : myEvents.length === 0 ? (
-              <div>No joined events found.</div>
+              <div>Приєднаних подій не знайдено.</div>
             ) : (
               <EventsTable events={myEvents} />
             )}

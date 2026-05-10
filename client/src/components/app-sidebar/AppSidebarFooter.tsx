@@ -3,8 +3,6 @@ import { getUserInitials } from "../../lib/utils";
 import type { UserPublic } from "../../shared/api/types";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
-import { eventsApi } from "../../shared/api/events-api";
-import { meApi } from "../../shared/api/me-api";
 
 type Props = {
   user: UserPublic;
@@ -38,10 +36,10 @@ export function AppSidebarFooter({ user, sidebarExpanded, onLogout }: Props) {
           className="cursor-pointer"
           variant="outline"
           onClick={() => onLogout()}
-          tooltip="Exit"
+          tooltip="Вихід"
         >
           <LogOut className="mr-1" />
-          Logout
+          Вихід
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>

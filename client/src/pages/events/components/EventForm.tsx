@@ -67,7 +67,7 @@ export function EventForm({
       : null;
 
     if (!startedAt) {
-      setClientError("Please provide a valid start date and time.");
+      setClientError("Вкажіть коректну дату та час початку.");
       return;
     }
 
@@ -83,10 +83,10 @@ export function EventForm({
   return (
     <div className={cn("mx-auto w-full max-w-2xl space-y-6", className)}>
       <div className="space-y-2">
-        <Button variant="ghost" size="sm" asChild>
+        <Button variant="ghost" size="sm" className="cursor-pointer" asChild>
           <Link to={backTo}>
             <ArrowLeft className="mr-2 size-4" />
-            {backLabel || "Back"}
+            {backLabel || "Назад"}
           </Link>
         </Button>
         <h1 className="text-2xl font-heading font-semibold">{title}</h1>
@@ -103,23 +103,23 @@ export function EventForm({
 
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="capacity">Название</FieldLabel>
+                <FieldLabel htmlFor="capacity">Назва</FieldLabel>
                 <Input
                   id="title"
                   name="title"
                   defaultValue={inputValues?.title}
-                  placeholder="до 200 символов"
+                  placeholder="до 200 символів"
                   disabled={isLoading}
                   required
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="description">Описание</FieldLabel>
+                <FieldLabel htmlFor="description">Опис</FieldLabel>
                 <Textarea
                   id="description"
                   name="description"
                   defaultValue={inputValues?.description}
-                  placeholder="Краткое описание события, до 1000 символов"
+                  placeholder="Короткий опис події, до 1000 символів"
                   rows={6}
                   disabled={isLoading}
                   required
@@ -127,18 +127,18 @@ export function EventForm({
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="address">Адресс</FieldLabel>
+                <FieldLabel htmlFor="address">Адреса</FieldLabel>
                 <Input
                   id="address"
                   name="address"
                   defaultValue={inputValues?.address}
-                  placeholder="Адрес проведения события, до 200 символов"
+                  placeholder="Адреса проведення події, до 200 символів"
                   disabled={isLoading}
                   required
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="startedAt">Дата проведения</FieldLabel>
+                <FieldLabel htmlFor="startedAt">Дата проведення</FieldLabel>
                 <Input
                   id="startedAt"
                   name="startedAt"
@@ -150,7 +150,7 @@ export function EventForm({
                           .slice(0, 16)
                       : ""
                   }
-                  placeholder="Дата и время проведения события"
+                  placeholder="Дата і час проведення події"
                   disabled={isLoading}
                   required
                 />
@@ -161,7 +161,7 @@ export function EventForm({
                     className="inline-flex items-center text-transparent"
                     htmlFor="capacity-slider"
                   >
-                    Вместимость
+                    Місткість
                   </FieldLabel>
                   <span className="text-sm text-muted-foreground tabular-nums">
                     {capacity}
@@ -181,17 +181,22 @@ export function EventForm({
           </CardContent>
           <CardFooter className="flex items-center justify-end gap-4 pt-0">
             <Button
+              className="cursor-pointer"
               variant="ghost"
               type="button"
               onClick={() => navigate(cancelTo)}
               disabled={isLoading}
             >
-              Отмена
+              Скасувати
             </Button>
-            <Button disabled={isLoading} type="submit">
+            <Button
+              className="cursor-pointer"
+              disabled={isLoading}
+              type="submit"
+            >
               {isLoading
-                ? submittingLabel || "Submitting..."
-                : submitLabel || "Submit"}
+                ? submittingLabel || "Збереження..."
+                : submitLabel || "Надіслати"}
             </Button>
           </CardFooter>
         </form>

@@ -11,7 +11,7 @@ export const meApi = {
     });
 
     if (!data) {
-      throw new Error("Failed to fetch user profile");
+      throw new Error("Не вдалося отримати профіль користувача");
     }
     return data.events;
   },

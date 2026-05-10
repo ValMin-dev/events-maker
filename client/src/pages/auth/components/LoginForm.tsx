@@ -42,27 +42,31 @@ export function LoginForm() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <AuthFormCard
-        title="Welcome back"
-        description="Enter your details to sign in."
+        title="Ласкаво просимо"
+        description="Введіть свої дані, щоб увійти в акаунт."
       >
         <form onSubmit={handleSubmit}>
           <FieldGroup>
             <AuthFormErrorAlert message={authError} />
 
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email">Електронна пошта</FieldLabel>
               <input type="email" name="email" id="email" required />
             </Field>
             <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <FieldLabel htmlFor="password">Пароль</FieldLabel>
               <input type="password" name="password" id="password" required />
             </Field>
             <Field>
-              <Button type="submit" disabled={isAuthLoading} className="w-full">
-                {isAuthLoading ? "Loading..." : "Sign in"}
+              <Button
+                type="submit"
+                disabled={isAuthLoading}
+                className="w-full cursor-pointer"
+              >
+                {isAuthLoading ? "Завантаження..." : "Увійти"}
               </Button>
               <FieldDescription className="text-center">
-                Don't have an account?{" "}
+                Немає акаунта?{" "}
                 <Link
                   to="/register"
                   className="text-blue-500 underline-offset-4 hover:underline"
@@ -70,7 +74,7 @@ export function LoginForm() {
                     useAuthStore.getState().clearOfError();
                   }}
                 >
-                  Register
+                  Зареєструватися
                 </Link>
               </FieldDescription>
             </Field>

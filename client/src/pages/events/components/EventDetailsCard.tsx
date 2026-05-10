@@ -33,8 +33,8 @@ export function EventDetailsCard({
 }: Props) {
   const eventToRender = event;
   const isParticipantText = isParticipant
-    ? "Покинуть событие"
-    : "Присоединиться к событию";
+    ? "Покинути подію"
+    : "Приєднатися до події";
 
   const participantsCount = eventToRender.participants?.length ?? 0;
   const participantsLeft = eventToRender.capacity - participantsCount;
@@ -53,23 +53,23 @@ export function EventDetailsCard({
         </CardHeader>
         <CardContent className="space-y-4 text-sm">
           <div>
-            <p className="text-muted-foreground ">Когда</p>
+            <p className="text-muted-foreground ">Коли</p>
             <p> {formatStartDate(eventToRender.startedAt)}</p>
           </div>
           <div>
-            <p className="text-muted-foreground ">Описание</p>
+            <p className="text-muted-foreground ">Опис</p>
             <p> {eventToRender.description}</p>
           </div>
           <div>
-            <p className="text-muted-foreground ">Где</p>
+            <p className="text-muted-foreground ">Де</p>
             <p> {eventToRender.address}</p>
           </div>
           <div>
-            <p className="text-muted-foreground ">Вместимость</p>
+            <p className="text-muted-foreground ">Місткість</p>
             <p>До {eventToRender.capacity}</p>
           </div>
           <div>
-            <p className="text-muted-foreground ">Осталось мест</p>
+            <p className="text-muted-foreground ">Залишилось місць</p>
             <p>{participantsLeft}</p>
           </div>
         </CardContent>
@@ -77,32 +77,39 @@ export function EventDetailsCard({
           {isOwner ? (
             <>
               <p className="mr-auto text-sm text-muted-foreground">
-                Вы организатор
+                Ви організатор
               </p>
               <Button
                 variant="outline"
                 size="sm"
+                className="cursor-pointer"
                 onClick={onClickDelete}
                 disabled={mutationLoading}
               >
-                <Link to={`/events`}>Удалить событие</Link>
+                <Link to={`/events`}>Видалити подію</Link>
               </Button>
-              <Button variant="destructive" size="sm" asChild>
+              <Button
+                variant="destructive"
+                size="sm"
+                className="cursor-pointer"
+                asChild
+              >
                 <Link to={`/events/${eventToRender.id}/edit`}>
-                  Редактировать
+                  Редагувати подію
                 </Link>
               </Button>
             </>
           ) : participantsLeft === 0 ? (
             <>
               <p className="mr-auto text-sm text-muted-foreground">
-                Событие уже полное
+                Місць немає
               </p>
 
               {isParticipant ? (
                 <Button
                   variant="outline"
                   size="sm"
+                  className="cursor-pointer"
                   onClick={onClickLeave}
                   disabled={mutationLoading}
                 >
@@ -114,13 +121,19 @@ export function EventDetailsCard({
             <Button
               variant="outline"
               size="sm"
+              className="cursor-pointer"
               onClick={onClickLeave}
               disabled={mutationLoading}
             >
               {isParticipantText}
             </Button>
           ) : (
-            <Button size="sm" onClick={onClickJoin} disabled={mutationLoading}>
+            <Button
+              size="sm"
+              className="cursor-pointer"
+              onClick={onClickJoin}
+              disabled={mutationLoading}
+            >
               {isParticipantText}
             </Button>
           )}

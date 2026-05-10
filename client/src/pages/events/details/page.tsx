@@ -8,11 +8,6 @@ import { EventDetailsCard } from "../components/EventDetailsCard";
 import { eventsApi } from "../../../shared/api/events-api";
 export function EventDetailsPage() {
   const { user, isAuthLoading, isAuthenticated } = useAuthStore();
-  console.log("EventDetailsPage auth state", {
-    user,
-    isAuthLoading,
-    isAuthenticated,
-  });
   const { id } = useParams<{ id: string }>();
   const {
     myEvents,
@@ -40,29 +35,29 @@ export function EventDetailsPage() {
   }
   if (isAuthLoading) {
     return (
-      <PageShell title="Loading...">
-        <span>Loading user profile...</span>
+      <PageShell title="Завантаження...">
+        <span>Завантаження профілю користувача...</span>
       </PageShell>
     );
   }
   if (isLoading) {
     return (
-      <PageShell title="Loading...">
-        <span>Loading event details...</span>
+      <PageShell title="Завантаження...">
+        <span>Завантаження деталей події...</span>
       </PageShell>
     );
   }
   if (eventError) {
     return (
-      <PageShell title="Error">
-        <span>Error loading event: {eventError}</span>
+      <PageShell title="Помилка">
+        <span>Помилка завантаження події: {eventError}</span>
       </PageShell>
     );
   }
   if (!isAuthenticated || !user) {
     return (
-      <PageShell title="Error">
-        <span>Error with authentication: User not logged in</span>
+      <PageShell title="Помилка">
+        <span>Помилка автентифікації: користувач не увійшов у систему</span>
       </PageShell>
     );
   }
@@ -70,13 +65,11 @@ export function EventDetailsPage() {
   const onClickDelete = async () => {
     try {
       if (!visibleEvent) return;
-      if (confirm("Вы уверены, что хотите удалить это событие?")) {
+      if (confirm("Ви впевнені, що хочете видалити цю подію?")) {
         await eventsApi.delete(visibleEvent.id);
-        console.log("Event deleted successfully with id:", visibleEvent.id);
       }
     } catch (error) {
-      console.error("Failed to delete event:", error);
-      alert("Не удалось удалить событие. Пожалуйста, попробуйте еще раз.");
+      alert("Не вдалося видалити подію. Будь ласка, спробуйте ще раз.");
     }
   };
   const handleJoinClick = async () => {
@@ -85,7 +78,7 @@ export function EventDetailsPage() {
       await joinEvent(visibleEvent.id);
       await fetchEventById(visibleEvent.id);
     } catch (error) {
-      console.error("Failed to join event:", error);
+      console.error(error);
     }
   };
 
@@ -95,7 +88,7 @@ export function EventDetailsPage() {
       await leaveEvent(visibleEvent.id);
       await fetchEventById(visibleEvent.id);
     } catch (error) {
-      console.error("Failed to leave event:", error);
+      console.error(error);
     }
   };
 
@@ -104,17 +97,16 @@ export function EventDetailsPage() {
     (joined) => joined.id === visibleEvent?.id,
   );
 
-  console.log("EventDetailsPage render", {
-    id,
-    event: visibleEvent,
-    isOwner,
-    isParticipant,
-  });
   return (
-    <PageShell title={visibleEvent?.title || "Event Details"}>
+    <PageShell title={visibleEvent?.title || "Деталі події"}>
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-4">
-        <Button variant="ghost" size="sm" className="w-fit" asChild>
-          <Link to="/events">Back to Events</Link>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-fit cursor-pointer"
+          asChild
+        >
+          <Link to="/events">Повернутися до подій</Link>
         </Button>
 
         <EventDetailsCard

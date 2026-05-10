@@ -15,7 +15,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       },
     });
     return reply.status(200).send({
-      message: "Events retrieved successfully",
+      message: "Події успішно отримано",
       events,
     });
   });
@@ -28,19 +28,19 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       const event = await eventRepository.findOne({ where: { id: id } });
       if (!event) {
         return reply.status(404).send({
-          message: "Event not found",
+          message: "Подію не знайдено",
         });
       }
       const userId = request.user.sub;
       if (event.ownerId !== userId) {
         return reply.status(403).send({
-          message: "Forbidden: You are not the owner of this event",
+          message: "Заборонено: ви не є власником цієї події",
         });
       }
       await participantsRepository.delete({ eventId: id });
       await eventRepository.delete({ id: id });
       return reply.status(200).send({
-        message: "Event deleted successfully",
+        message: "Подію успішно видалено",
       });
     },
   );
@@ -53,11 +53,11 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
     });
     if (!event) {
       return reply.status(404).send({
-        message: "Event not found",
+        message: "Подію не знайдено",
       });
     }
     return reply.status(200).send({
-      message: "Event retrieved successfully",
+      message: "Подію успішно отримано",
       event,
     });
   });
@@ -70,19 +70,19 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       const event = await eventRepository.findOne({ where: { id: id } });
       if (!event) {
         return reply.status(404).send({
-          message: "Event not found",
+          message: "Подію не знайдено",
         });
       }
       const userId = request.user.sub;
       if (event.ownerId !== userId) {
         return reply.status(403).send({
-          message: "Forbidden: You are not the owner of this event",
+          message: "Заборонено: ви не є власником цієї події",
         });
       }
       const parseBody = editEventSchema.safeParse(request.body);
       if (!parseBody.success) {
         return reply.status(400).send({
-          message: "Invalid request body",
+          message: "Некоректне тіло запиту",
         });
       }
       const { title, description, capacity, address, startedAt } =
@@ -96,7 +96,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       if (startedAt !== undefined) event.startedAt = startedAt;
       const updatedEvent = await eventRepository.save(event);
       return reply.status(200).send({
-        message: "Event updated successfully",
+        message: "Подію успішно оновлено",
         event: updatedEvent,
       });
     },
@@ -106,7 +106,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
     const parseBody = createEventSchema.safeParse(request.body);
     if (!parseBody.success) {
       return reply.status(400).send({
-        message: "Invalid request body",
+        message: "Некоректне тіло запиту",
       });
     }
 
@@ -124,7 +124,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
     const savedEvent = await eventRepository.save(newEvent);
 
     return reply.status(201).send({
-      message: "Event created successfully",
+      message: "Подію успішно створено",
       event: savedEvent,
     });
   });
@@ -137,7 +137,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       const event = await eventRepository.findOne({ where: { id: id } });
       if (!event) {
         return reply.status(404).send({
-          message: "Event not found",
+          message: "Подію не знайдено",
         });
       }
       const userId = request.user.sub;
@@ -146,7 +146,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       });
       if (existingParticipant) {
         return reply.status(400).send({
-          message: "You have already joined this event",
+          message: "Ви вже приєдналися до цієї події",
         });
       }
       const participantCount = await participantsRepository.count({
@@ -154,7 +154,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       });
       if (participantCount >= event.capacity) {
         return reply.status(400).send({
-          message: "Event is at full capacity",
+          message: "Подія вже заповнена",
         });
       }
       const newParticipant = participantsRepository.create({
@@ -164,7 +164,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       });
       await participantsRepository.save(newParticipant);
       return reply.status(200).send({
-        message: "Joined event successfully",
+        message: "Ви успішно приєдналися до події",
       });
     },
   );
@@ -177,7 +177,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       const event = await eventRepository.findOne({ where: { id: id } });
       if (!event) {
         return reply.status(404).send({
-          message: "Event not found",
+          message: "Подію не знайдено",
         });
       }
       const participants = await participantsRepository.find({
@@ -185,7 +185,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
         relations: ["user"],
       });
       return reply.status(200).send({
-        message: "Participants retrieved successfully",
+        message: "Учасників успішно отримано",
         participants: participants.map((participant) => ({
           id: participant.id,
           userId: participant.userId,
@@ -205,7 +205,7 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       const event = await eventRepository.findOne({ where: { id: id } });
       if (!event) {
         return reply.status(404).send({
-          message: "Event not found",
+          message: "Подію не знайдено",
         });
       }
       const userId = request.user.sub;
@@ -214,12 +214,12 @@ export const eventsRoutes: FastifyPluginAsync = async (app) => {
       });
       if (!participant) {
         return reply.status(404).send({
-          message: "You are not a participant of this event",
+          message: "Ви не є учасником цієї події",
         });
       }
       await participantsRepository.remove(participant);
       return reply.status(200).send({
-        message: "Left event successfully",
+        message: "Ви успішно покинули подію",
       });
     },
   );

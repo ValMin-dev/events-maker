@@ -19,11 +19,11 @@ export const EventsTable = ({ events }: Props) => {
   return (
     <Table>
       <TableHeader>
-        <TableHead>Title</TableHead>
-        <TableHead>Start Date</TableHead>
-        <TableHead>Adress</TableHead>
-        <TableHead>Count</TableHead>
-        <TableHead>Actions</TableHead>
+        <TableHead>Назва</TableHead>
+        <TableHead>Дата початку</TableHead>
+        <TableHead>Адреса</TableHead>
+        <TableHead>Кількість</TableHead>
+        <TableHead>Дії</TableHead>
       </TableHeader>
       <TableBody>
         {events.map((event) => (
@@ -33,8 +33,8 @@ export const EventsTable = ({ events }: Props) => {
             <TableCell>{event.address}</TableCell>
             <TableCell>{event.capacity}</TableCell>
             <TableCell className="font-medium">
-              <Button variant="link">
-                <Link to={`/events/${event.id}`}>View</Link>
+              <Button variant="link" className="cursor-pointer">
+                <Link to={`/events/${event.id}`}>Детальніше</Link>
               </Button>
             </TableCell>
           </TableRow>

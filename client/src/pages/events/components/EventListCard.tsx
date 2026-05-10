@@ -27,16 +27,21 @@ export function EventListCard({ event }: Props) {
       </CardHeader>
       <CardContent>
         <p className="line-clamp-3 text-sm text-muted-foreground">
-          {event.description ? event.description : "No description provided."}
+          {event.description ? event.description : "Опис не вказано."}
         </p>
       </CardContent>
       <CardFooter className="flex flex-col mt-auto  pt-auto justify-between pt-4 gap-1">
         <p className="text-xs text-muted-foreground">
-          До {event.capacity} участников
+          До {event.capacity} учасників
         </p>
         <p className="text-sm text-muted-foreground"></p>
-        <Button size="sm" className="font-bold" variant="outline" asChild>
-          <Link to={`/events/${event.id}`}>View</Link>
+        <Button
+          size="sm"
+          className="font-bold cursor-pointer"
+          variant="outline"
+          asChild
+        >
+          <Link to={`/events/${event.id}`}>Детальніше</Link>
         </Button>
       </CardFooter>
     </Card>
