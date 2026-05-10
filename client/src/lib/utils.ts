@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { isAxiosError } from "../shared/api/http";
 import type { ApiErrorResponse } from "../shared/api/types";
 import { format, isValid, parseISO } from "date-fns";
-import { enUS } from "date-fns/locale";
+import { uk } from "date-fns/locale";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -36,7 +36,7 @@ export function getUserInitials(name: string | null | undefined) {
 export function formatStartDate(dateString: string) {
   const date = parseISO(dateString);
   if (isValid(date)) {
-    return format(date, "PPp", { locale: enUS });
+    return format(date, "PPp", { locale: uk });
   }
   return "Invalid date";
 }

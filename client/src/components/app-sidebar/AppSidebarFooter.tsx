@@ -34,98 +34,14 @@ export function AppSidebarFooter({ user, sidebarExpanded, onLogout }: Props) {
       ) : null}
 
       <SidebarMenuItem>
-        <SidebarMenuButton onClick={() => onLogout()} tooltip="Exit">
+        <SidebarMenuButton
+          className="cursor-pointer"
+          variant="outline"
+          onClick={() => onLogout()}
+          tooltip="Exit"
+        >
           <LogOut className="mr-1" />
           Logout
-        </SidebarMenuButton>
-
-        <SidebarMenuButton
-          onClick={() => eventsApi.getAll()}
-          tooltip="Get Events"
-        >
-          <LogOut className="mr-1" />
-          Get Events
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() => meApi.joinedEvents()}
-          tooltip="Get Joined Events"
-        >
-          <LogOut className="mr-1" />
-          Get Joined Events
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() =>
-            eventsApi.getById("436fc835-fbe9-4e89-8ed9-c401e2579241")
-          }
-          tooltip="Get Event by ID"
-        >
-          <LogOut className="mr-1" />
-          Get Event by ID
-        </SidebarMenuButton>
-
-        <SidebarMenuButton
-          onClick={() => eventsApi.join("436fc835-fbe9-4e89-8ed9-c401e2579241")}
-          tooltip="Join Event"
-        >
-          <LogOut className="mr-1" />
-          Join Event
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() =>
-            eventsApi.leave("436fc835-fbe9-4e89-8ed9-c401e2579241")
-          }
-          tooltip="Leave Event"
-        >
-          <LogOut className="mr-1" />
-          Leave Event
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() =>
-            eventsApi.getParticipants("8ca50c62-33a2-46ef-a449-7128f3554d33")
-          }
-          tooltip="Get Participants"
-        >
-          <LogOut className="mr-1" />
-          Get Participants
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() =>
-            eventsApi.update("436fc835-fbe9-4e89-8ed9-c401e2579241", {
-              title: "New Title for Event EDITING",
-              description: "New Description for Event EDITING",
-              capacity: 100,
-              address: "New Address for Event EDITING",
-              startedAt: new Date().toISOString(),
-            })
-          }
-          tooltip="Update Event"
-        >
-          <LogOut className="mr-1" />
-          Update Event
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() =>
-            eventsApi.delete("436fc835-fbe9-4e89-8ed9-c401e2579241")
-          }
-          tooltip="Delete Event"
-        >
-          <LogOut className="mr-1" />
-          Delete Event
-        </SidebarMenuButton>
-        <SidebarMenuButton
-          onClick={() =>
-            eventsApi.create({
-              title: `New Event of user ${user.name}`,
-              description: "Event Description",
-              capacity: 100,
-              address: "Event Address",
-              startedAt: new Date().toISOString(),
-            })
-          }
-          tooltip="Create Event"
-        >
-          <LogOut className="mr-1" />
-          Create Event
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>

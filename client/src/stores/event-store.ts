@@ -69,6 +69,8 @@ export const useEventsStore = create<EventsState>((set, get) => ({
         events: state.events.map((event) =>
           event.id === id ? updatedEvent : event,
         ),
+        currentEvent:
+          state.currentEvent?.id === id ? updatedEvent : state.currentEvent,
         myEvents: state.myEvents.map((joined) =>
           joined.id === id ? updatedEvent : joined,
         ),

@@ -6,7 +6,7 @@ import { ProtectedRoute } from "./router/ProtectedRoute";
 import { AuthRegisterPage } from "../pages/auth/register/page";
 import { AuthLoginPage } from "../pages/auth/login/page";
 import { EventsAllPage } from "../pages/events/all/page";
-import { EventsMyPage } from "../pages/events/my/page";
+import { MyEventsPage } from "../pages/events/my/page";
 import { EventDetailsPage } from "../pages/events/details/page";
 import { EventCreateForm } from "../pages/events/components/EventCreateForm";
 import { EventsEditPage } from "../pages/events/edit/page";
@@ -28,7 +28,7 @@ export const appRouter = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           { path: "events", element: <EventsAllPage /> },
-          { path: "events/my", element: <EventsMyPage /> },
+          { path: "events/my", element: <MyEventsPage /> },
           { path: "events/new", element: <EventCreateForm /> },
           { path: "events/:id", element: <EventDetailsPage /> },
           { path: "events/:id/edit", element: <EventsEditPage /> },

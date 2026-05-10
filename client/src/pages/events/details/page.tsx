@@ -5,6 +5,7 @@ import { useEventById } from "../hooks/use-event-by-id";
 import { PageShell } from "../../../components/page-shell";
 import { Button } from "../../../components/ui/button";
 import { EventDetailsCard } from "../components/EventDetailsCard";
+import { eventsApi } from "../../../shared/api/events-api";
 export function EventDetailsPage() {
   const { user, isAuthLoading, isAuthenticated } = useAuthStore();
   console.log("EventDetailsPage auth state", {
@@ -17,6 +18,7 @@ export function EventDetailsPage() {
     myEvents,
     joinEvent,
     leaveEvent,
+
     mutationLoading,
     currentEvent,
     fetchEventById,
@@ -64,6 +66,19 @@ export function EventDetailsPage() {
       </PageShell>
     );
   }
+
+  const onClickDelete = async () => {
+    try {
+      if (!visibleEvent) return;
+      if (confirm("Вы уверены, что хотите удалить это событие?")) {
+        await eventsApi.delete(visibleEvent.id);
+        console.log("Event deleted successfully with id:", visibleEvent.id);
+      }
+    } catch (error) {
+      console.error("Failed to delete event:", error);
+      alert("Не удалось удалить событие. Пожалуйста, попробуйте еще раз.");
+    }
+  };
   const handleJoinClick = async () => {
     try {
       if (!visibleEvent) return;
@@ -110,6 +125,7 @@ export function EventDetailsPage() {
           eventsError={eventError}
           onClickJoin={handleJoinClick}
           onClickLeave={handleLeaveClick}
+          onClickDelete={onClickDelete}
         />
       </div>
     </PageShell>

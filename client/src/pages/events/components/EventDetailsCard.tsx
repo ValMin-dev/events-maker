@@ -18,6 +18,7 @@ type Props = {
 
   onClickJoin: () => void;
   onClickLeave: () => void;
+  onClickDelete: () => void;
 };
 
 export function EventDetailsCard({
@@ -27,6 +28,7 @@ export function EventDetailsCard({
   mutationLoading,
   eventsError,
   onClickJoin,
+  onClickDelete,
   onClickLeave,
 }: Props) {
   const eventToRender = event;
@@ -77,11 +79,36 @@ export function EventDetailsCard({
               <p className="mr-auto text-sm text-muted-foreground">
                 Вы организатор
               </p>
-              <Button variant="outline" size="sm" asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onClickDelete}
+                disabled={mutationLoading}
+              >
+                <Link to={`/events`}>Удалить событие</Link>
+              </Button>
+              <Button variant="destructive" size="sm" asChild>
                 <Link to={`/events/${eventToRender.id}/edit`}>
                   Редактировать
                 </Link>
               </Button>
+            </>
+          ) : participantsLeft === 0 ? (
+            <>
+              <p className="mr-auto text-sm text-muted-foreground">
+                Событие уже полное
+              </p>
+
+              {isParticipant ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onClickLeave}
+                  disabled={mutationLoading}
+                >
+                  {isParticipantText}
+                </Button>
+              ) : null}
             </>
           ) : isParticipant ? (
             <Button

@@ -56,7 +56,6 @@ export function EventForm({
     const description = String(formData.get("description") || "").trim();
     const address = String(formData.get("address") || "").trim();
     const startedAtRaw = String(formData.get("startedAt") || "").trim();
-    const capacity = Number(formData.get("capacity") || 50);
     const startedAtRawParsed = parse(
       startedAtRaw,
       DATETIME_LOCAL_INPUT_FORMAT,
